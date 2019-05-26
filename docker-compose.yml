@@ -1,0 +1,7 @@
+version: '3'
+services:
+  app:
+    image: "node:12.3"
+    command: echo "Hello Node"
+    volumes:
+      - ./src:/src:rw
