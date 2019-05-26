@@ -1,0 +1,21 @@
+{
+  "name": "problem-solving",
+  "version": "1.0.0",
+  "description": "A Pattern for Problem Solving - Supporting Materials",
+  "author": "AlexREvans",
+  "private": true,
+  "scripts": {
+    "pretest": "tsc",
+    "test": "mocha"
+  },
+  "repository": "github:AlexREvans/Problem-Solving",
+  "devDependencies": {
+    "@types/chai": "^4.1.7",
+    "@types/mocha": "^5.2.6",
+    "chai": "^4.2.0",
+    "mocha": "^6.1.4",
+    "mocha-typescript": "^1.1.17",
+    "typescript": "^3.4.5",
+    "source-map-support": "^0.5.12"
+  }
+}
