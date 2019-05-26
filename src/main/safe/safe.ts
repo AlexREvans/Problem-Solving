@@ -1,3 +1,2 @@
-function myFn () {
-    return 3;
-}
+
+export const myFn = () => 3;
