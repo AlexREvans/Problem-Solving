@@ -1,13 +1,16 @@
 import { Generator, Ranker, solve, Pruner } from "../solver/solver";
 
 export class CodeGenerator implements Generator<number> {
+
+    seed: number = 0;
+
     setPruners(pruners: Pruner<number>[]): void {
     }
-    
+
     next(): number {
-        return 3;
+        return this.seed++;
     }
     hasNext(): boolean {
-        return false;
+        return this.seed < 1000;
     }
 }
