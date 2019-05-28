@@ -1,9 +1,9 @@
 // Reference mocha-typescript's global definitions:
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
-import { assert, expect } from "chai";
+import { expect } from "chai";
 import { CodeGenerator } from "../main/safe/safe";
-import { Pruner, solve } from "../main/solver/solver";
+import { solve } from "../main/solver/solver";
 
 @suite(timeout(3000), slow(1000))
 class SafeTest {
@@ -13,10 +13,20 @@ class SafeTest {
     }
 
     @test canSolve() {
+
+        const threshold = (candidate, f) => candidate === '541';
+        const feedback = candidate => ({indexMatches : []});
+
         const result = solve(
             new CodeGenerator(),
-            num => num,
-            (o, rnk) => rnk > 25);
-        expect(result).to.eq(26);
+            feedback,
+            threshold);
+        
+            expect(result).to.eq('541');
+    }
+
+    @test canConstructComination() {
+        const codeGenerator = new CodeGenerator();
+        expect(codeGenerator.toCombination(53)).to.eq("053");
     }
 }
