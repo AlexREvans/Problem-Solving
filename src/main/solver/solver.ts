@@ -7,14 +7,18 @@ export interface Generator<T, F> {
 export function solve<T, F>(
     gen: Generator<T, F>,
     ranker: (candidate: T) => F,
-    threshold: (candidate: T, feedback: F) => boolean): T {
+    threshold: (candidate: T, feedback: F) => boolean): { solution: T, solutionsConsidered: number } {
+
+    var solutionsConsidered = 0;
+
     while (gen.hasNext()) {
         const u = gen.next();
+        solutionsConsidered += 1;
         const rank = ranker(u);
         if (threshold(u, rank)) {
-            return u;
+            return { solution: u, solutionsConsidered }
         }
         gen.feedback(u, rank);
     }
-    return null;
+    return {solution: null, solutionsConsidered};
 }

@@ -4,7 +4,11 @@ export class CodeGenerator implements Generator<string, { indexMatches: boolean[
 
     knownPositions: string[] = [];
     seed: number = 0;
-    combinationLength = 3;
+    combinationLength:number;
+
+    constructor(combinationLength: number) {
+        this.combinationLength = combinationLength;
+    }
 
     feedback(candidate: string, feedback: { indexMatches: boolean[] }): void {
         const correctIndicies = feedback.indexMatches
