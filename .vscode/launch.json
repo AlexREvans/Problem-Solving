@@ -1,0 +1,19 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Mocha",
+            "type": "node",
+            "request": "attach",
+            "port": 5858,
+            "preLaunchTask": "up-debug-container",
+            "postDebugTask": "down-debug-container",
+            "address": "localhost",
+            "timeout": 10000,
+            "sourceMaps": true,
+            "outFiles": ["${workspaceRoot}/src/dist"],
+            "localRoot": "${workspaceRoot}/src/dist",
+            "remoteRoot": "/src/dist"
+        }
+    ]
+}
