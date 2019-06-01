@@ -24,15 +24,21 @@ export class CodeGenerator implements Generator<string, { indexMatches: boolean[
     }
 
     knownDigits() {
-        return this.knownPositions.filter(v => v).length;
+        return this.knownPositions.filter(v => v !== undefined).length;
+    }
+
+    nextIncrement(knownValues: any[]): number {
+        return Math.pow(10, (knownValues.length - knownValues.lastIndexOf(undefined) - 1));
     }
 
     next(): string {
-        return this.toCombination(this.seed++);
+
+        const nextIncr = this.nextIncrement(this.knownPositions);
+        return this.toCombination(this.seed + nextIncr);
     }
 
     hasNext(): boolean {
-        return this.seed < 1000 || this.knownDigits() === this.combinationLength;
+        return this.seed < 1000 || this.knownDigits() !== this.combinationLength;
     }
 
 }

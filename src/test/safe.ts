@@ -7,6 +7,18 @@ import { solve } from "../main/solver/solver";
 
 @suite(timeout(3000), slow(1000))
 class SafeTest {
+
+    @test incrementsDigits() {
+        const codeGenerator = new CodeGenerator(3);
+        
+        expect(codeGenerator.nextIncrement([undefined, undefined, undefined])).to.eq(1);
+        expect(codeGenerator.nextIncrement([undefined, 2, undefined])).to.eq(1);
+        expect(codeGenerator.nextIncrement([2, 3, undefined])).to.eq(1);
+        expect(codeGenerator.nextIncrement([undefined, undefined, 1])).to.eq(10);
+        expect(codeGenerator.nextIncrement([undefined, 2, 3])).to.eq(100);
+        expect(codeGenerator.nextIncrement([1, undefined, 1])).to.eq(10);
+    }
+
     @test canGenerateSequence() {
         const codeGenerator = new CodeGenerator(3);
         expect(codeGenerator.next()).not.null;
@@ -28,6 +40,18 @@ class SafeTest {
 
     poorFeedback = candidate => ({ indexMatches: [] })
 
+
+    @test canSolveWithFeedback() {
+
+        const theCode = '521'
+        const result = solve(
+            new CodeGenerator(theCode.length),
+            this.usefulFeedback(theCode),
+            this.matchingCode(theCode));
+
+        expect(result.solution).to.eq(theCode);
+    }
+
     @test canSolveWithPoorFeedback() {
 
         const theCode = '521'
@@ -47,17 +71,6 @@ class SafeTest {
         expect(feedback('9942').indexMatches).to.deep.equal([false, false, true, true]);
         expect(feedback('4212').indexMatches).to.deep.equal([true, true, false, true]);
         expect(feedback('4242').indexMatches).to.deep.equal([true, true, true, true]);
-    }
-
-    @test canSolveWithFeedback() {
-
-        const theCode = '521'
-        const result = solve(
-            new CodeGenerator(theCode.length),
-            this.usefulFeedback(theCode),
-            this.matchingCode(theCode));
-
-        expect(result.solution).to.eq(theCode);
     }
 
     @test performanceImprovementWithFeedback() {
