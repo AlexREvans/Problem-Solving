@@ -1,4 +1,3 @@
 --ui mocha-typescript
 --require source-map-support/register
---inspect-brk=0.0.0.0:5858
 dist/test

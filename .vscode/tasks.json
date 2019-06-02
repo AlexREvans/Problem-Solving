@@ -17,7 +17,7 @@
         },
         {
             "label": "npm-run-test",
-            "command": "docker-compose exec app npm run test",
+            "command": "docker-compose exec app npm run test -- --inspect-brk=0.0.0.0:5858",
             "type": "shell",
             "isBackground": true,
             "dependsOn": ["up-debug-container"]
