@@ -1,24 +1,27 @@
-export interface Generator<T, F> {
-    next(): T;
+export interface Generator<SOLUTION, FEEDBACK> {
+    next(): SOLUTION;
     hasNext(): boolean;
-    feedback(candidate: T, feedback: F): void;
+    receiveFeedback(candidate: SOLUTION, feedback: FEEDBACK): void;
 }
+export type FeedbackSupplier<SOLUTION, FEEDBACK> = (candidate: SOLUTION) => FEEDBACK
+export type Threshold<SOLUTION, FEEDBACK> = (candidate: SOLUTION, feedback: FEEDBACK) => boolean;
+export type SolutionWithStats<SOLUTION> = { solution: SOLUTION, solutionsConsidered: number }
 
-export function solve<T, F>(
-    gen: Generator<T, F>,
-    ranker: (candidate: T) => F,
-    threshold: (candidate: T, feedback: F) => boolean): { solution: T, solutionsConsidered: number } {
+export function solve<SOLUTION, FEEDBACK>(
+    gen: Generator<SOLUTION, FEEDBACK>,
+    feedbackSupplier: FeedbackSupplier<SOLUTION, FEEDBACK>,
+    threshold: Threshold<SOLUTION, FEEDBACK>): SolutionWithStats<SOLUTION> {
 
     var solutionsConsidered = 0;
 
     while (gen.hasNext()) {
-        const u = gen.next();
+        const solution = gen.next();
         solutionsConsidered += 1;
-        const rank = ranker(u);
-        if (threshold(u, rank)) {
-            return { solution: u, solutionsConsidered }
+        const feedback = feedbackSupplier(solution);
+        if (threshold(solution, feedback)) {
+            return { solution, solutionsConsidered }
         }
-        gen.feedback(u, rank);
+        gen.receiveFeedback(solution, feedback);
     }
-    return {solution: null, solutionsConsidered};
+    return { solution: null, solutionsConsidered };
 }
