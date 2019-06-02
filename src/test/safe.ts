@@ -8,17 +8,6 @@ import { solve } from "../main/solver/solver";
 @suite(timeout(3000), slow(1000))
 class SafeTest {
 
-    @test incrementsDigits() {
-        const codeGenerator = new CodeGenerator(3);
-        
-        expect(codeGenerator.nextIncrement([undefined, undefined, undefined])).to.eq(1);
-        expect(codeGenerator.nextIncrement([undefined, 2, undefined])).to.eq(1);
-        expect(codeGenerator.nextIncrement([2, 3, undefined])).to.eq(1);
-        expect(codeGenerator.nextIncrement([undefined, undefined, 1])).to.eq(10);
-        expect(codeGenerator.nextIncrement([undefined, 2, 3])).to.eq(100);
-        expect(codeGenerator.nextIncrement([1, undefined, 1])).to.eq(10);
-    }
-
     @test canGenerateSequence() {
         const codeGenerator = new CodeGenerator(3);
         expect(codeGenerator.next()).not.null;
@@ -43,7 +32,7 @@ class SafeTest {
 
     @test canSolveWithFeedback() {
 
-        const theCode = '521'
+        const theCode = '086'
         const result = solve(
             new CodeGenerator(theCode.length),
             this.usefulFeedback(theCode),

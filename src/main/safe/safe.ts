@@ -5,9 +5,11 @@ export class CodeGenerator implements Generator<string, { indexMatches: boolean[
     knownPositions: string[] = [];
     seed: number = 0;
     combinationLength:number;
+    increment: number = 1;
 
     constructor(combinationLength: number) {
         this.combinationLength = combinationLength;
+        this.knownPositions = Array(combinationLength).fill(null);
     }
 
     feedback(candidate: string, feedback: { indexMatches: boolean[] }): void {
@@ -17,6 +19,7 @@ export class CodeGenerator implements Generator<string, { indexMatches: boolean[
             .map(vi => vi.index);
 
         correctIndicies.forEach(index => this.knownPositions[index] = candidate[index]);
+        this.increment = Math.pow(10, this.combinationLength -1 - this.knownPositions.lastIndexOf(null));
     }
 
     toCombination(n: number) {
@@ -24,17 +27,12 @@ export class CodeGenerator implements Generator<string, { indexMatches: boolean[
     }
 
     knownDigits() {
-        return this.knownPositions.filter(v => v !== undefined).length;
-    }
-
-    nextIncrement(knownValues: any[]): number {
-        return Math.pow(10, (knownValues.length - knownValues.lastIndexOf(undefined) - 1));
+        return this.knownPositions.filter(v => v !== null).length;
     }
 
     next(): string {
-
-        const nextIncr = this.nextIncrement(this.knownPositions);
-        return this.toCombination(this.seed + nextIncr);
+        this.seed += this.increment;
+        return this.toCombination(this.seed);
     }
 
     hasNext(): boolean {
