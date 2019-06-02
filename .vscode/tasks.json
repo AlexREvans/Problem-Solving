@@ -6,7 +6,7 @@
         {
             "label": "up-debug-container",
             "type": "shell",
-            "command": "docker-compose up",
+            "command": "docker-compose up -d",
             "isBackground": true
         },
         {
@@ -14,6 +14,13 @@
             "command": "docker-compose down",
             "type": "shell",
             "isBackground": true
+        },
+        {
+            "label": "npm-run-test",
+            "command": "docker-compose exec app npm run test",
+            "type": "shell",
+            "isBackground": true,
+            "dependsOn": ["up-debug-container"]
         }
     ]
 }
