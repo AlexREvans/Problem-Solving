@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { CodeGenerator, CodeFeedback } from "../main/safe/safe";
+import { SafeCodeGenerator, CodeFeedback } from "../main/safe/safe";
 import { solve, FeedbackSupplier, Threshold } from "../main/solver/solver";
 
 
@@ -30,7 +30,7 @@ describe("Solving for different inputs", () => {
     ].forEach(theCode => {
         it("can solve for " + theCode, () => {
             const result = solve(
-                new CodeGenerator(theCode.length),
+                new SafeCodeGenerator(theCode.length),
                 usefulFeedback(theCode),
                 matchingCode(theCode));
 

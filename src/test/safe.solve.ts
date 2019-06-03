@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { CodeGenerator, CodeFeedback } from "../main/safe/safe";
+import { SafeCodeGenerator, CodeFeedback } from "../main/safe/safe";
 import { solve, Threshold, FeedbackSupplier } from "../main/solver/solver";
 
 @suite
@@ -12,7 +12,7 @@ class SafeSolveTest {
         return candidate => candidate === theCode;
     }
 
-    usefulFeedback(theCode: string): FeedbackSupplier<string, CodeFeedback> {
+    helpfulLockFeedback(theCode: string): FeedbackSupplier<string, CodeFeedback> {
         const chars = theCode.split('');
         return candidate => ({
             indexMatches:
@@ -20,7 +20,7 @@ class SafeSolveTest {
         });
     }
 
-    emptyFeedback: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
+    strongLockFeedback: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
 
 
 
@@ -28,8 +28,8 @@ class SafeSolveTest {
     @test canSolveWithEmptyFeedback() {
         const theCode = '521'
         const result = solve(
-            new CodeGenerator(theCode.length),
-            this.emptyFeedback,
+            new SafeCodeGenerator(theCode.length),
+            this.strongLockFeedback,
             this.matchingCode(theCode));
 
         expect(result.solution).to.eq(theCode);
@@ -38,18 +38,8 @@ class SafeSolveTest {
     @test canSolveWithFeedback() {
         const theCode = '086'
         const result = solve(
-            new CodeGenerator(theCode.length),
-            this.usefulFeedback(theCode),
-            this.matchingCode(theCode));
-
-        expect(result.solution).to.eq(theCode);
-    }
-
-    @test canSolveVarietyOfInput() {
-        const theCode = '086'
-        const result = solve(
-            new CodeGenerator(theCode.length),
-            this.usefulFeedback(theCode),
+            new SafeCodeGenerator(theCode.length),
+            this.helpfulLockFeedback(theCode),
             this.matchingCode(theCode));
 
         expect(result.solution).to.eq(theCode);
@@ -60,14 +50,14 @@ class SafeSolveTest {
         const threshold = this.matchingCode(theCode);
 
         const resultWithFeedback = solve(
-            new CodeGenerator(theCode.length),
-            this.usefulFeedback(theCode),
+            new SafeCodeGenerator(theCode.length),
+            this.helpfulLockFeedback(theCode),
             threshold);
         const resultWithoutFeedback = solve(
-            new CodeGenerator(theCode.length),
-            this.emptyFeedback,
+            new SafeCodeGenerator(theCode.length),
+            this.strongLockFeedback,
             threshold);
 
-        expect(resultWithFeedback.solutionsConsidered).to.lt(resultWithoutFeedback.solutionsConsidered);
+        expect(resultWithFeedback.solutionsConsidered).to.be.lessThan(resultWithoutFeedback.solutionsConsidered);
     }
 }

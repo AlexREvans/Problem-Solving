@@ -2,7 +2,7 @@ import { Generator } from "../solver/solver";
 
 export type CodeFeedback = { indexMatches: boolean[] };
 
-export class CodeGenerator implements Generator<string, CodeFeedback> {
+export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
 
     knownPositions: string[];
     combinationLength: number;
@@ -15,12 +15,12 @@ export class CodeGenerator implements Generator<string, CodeFeedback> {
         this.knownPositions = Array(combinationLength).fill(null);
     }
 
-    next(): string {
+    nextCandidate(): string {
         this.seed += this.increment;
         return this.toCombination(this.seed);
     }
 
-    hasNext(): boolean {
+    hasNextCandidate(): boolean {
         const knownDigits = this.knownPositions.filter(v => v !== null).length;
         return knownDigits !== this.combinationLength || (this.seed + '').length <= this.combinationLength;
     }

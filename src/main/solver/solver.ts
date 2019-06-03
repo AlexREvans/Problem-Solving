@@ -1,6 +1,6 @@
 export interface Generator<SOLUTION, FEEDBACK> {
-    next(): SOLUTION;
-    hasNext(): boolean;
+    nextCandidate(): SOLUTION;
+    hasNextCandidate(): boolean;
     receiveFeedback(candidate: SOLUTION, feedback: FEEDBACK): void;
 }
 export type FeedbackSupplier<SOLUTION, FEEDBACK> = (candidate: SOLUTION) => FEEDBACK
@@ -14,8 +14,8 @@ export function solve<SOLUTION, FEEDBACK>(
 
     var solutionsConsidered = 0;
 
-    while (gen.hasNext()) {
-        const solution = gen.next();
+    while (gen.hasNextCandidate()) {
+        const solution = gen.nextCandidate();
         solutionsConsidered += 1;
         const feedback = feedbackSupplier(solution);
         if (threshold(solution, feedback)) {

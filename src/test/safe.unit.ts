@@ -2,20 +2,20 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { CodeGenerator } from "../main/safe/safe";
+import { SafeCodeGenerator } from "../main/safe/safe";
 
 @suite
 class SafeUnitTest {    
 
     @test canGenerateSequence() {
-        const codeGenerator = new CodeGenerator(3);
-        expect(codeGenerator.next()).not.null;
-        expect(codeGenerator.next()).not.null;
-        expect(codeGenerator.next()).not.null;
+        const codeGenerator = new SafeCodeGenerator(3);
+        expect(codeGenerator.nextCandidate()).not.null;
+        expect(codeGenerator.nextCandidate()).not.null;
+        expect(codeGenerator.nextCandidate()).not.null;
     }
 
     @test canConstructCombination() {
-        const codeGenerator = new CodeGenerator(3);
+        const codeGenerator = new SafeCodeGenerator(3);
         expect(codeGenerator.toCombination(53)).to.eq("053");
     }
 }
