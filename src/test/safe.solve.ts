@@ -20,7 +20,7 @@ class SafeSolveTest {
         });
     }
 
-    strongLockFeedback: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
+    ignoreLockFeedback: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
 
 
 
@@ -29,7 +29,7 @@ class SafeSolveTest {
         const theCode = '521'
         const result = solve(
             new SafeCodeGenerator(theCode.length),
-            this.strongLockFeedback,
+            this.ignoreLockFeedback,
             this.matchingCode(theCode));
 
         expect(result.solution).to.eq(theCode);
@@ -55,7 +55,7 @@ class SafeSolveTest {
             threshold);
         const resultWithoutFeedback = solve(
             new SafeCodeGenerator(theCode.length),
-            this.strongLockFeedback,
+            this.ignoreLockFeedback,
             threshold);
 
         expect(resultWithFeedback.solutionsConsidered).to.be.lessThan(resultWithoutFeedback.solutionsConsidered);
