@@ -2,8 +2,8 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { SafeCodeGenerator, CodeFeedback } from "../main/safe/safe";
-import { solve, FeedbackSupplier, Threshold } from "../main/solver/solver";
+import { SafeCodeGenerator, CodeFeedback } from "../main/safe";
+import { solve, FeedbackSupplier, Threshold } from "../main/solver";
 
 
 const usefulFeedback = function (theCode: string): FeedbackSupplier<string, CodeFeedback> {

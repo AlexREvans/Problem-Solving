@@ -2,7 +2,7 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { SafeCodeGenerator } from "../main/safe/safe";
+import { SafeCodeGenerator } from "../main/safe";
 
 @suite
 class SafeUnitTest {    

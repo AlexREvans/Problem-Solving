@@ -1,4 +1,4 @@
-import { Generator } from "../solver/solver";
+import { Generator } from "./solver";
 
 export type CodeFeedback = { indexMatches: boolean[] };
 

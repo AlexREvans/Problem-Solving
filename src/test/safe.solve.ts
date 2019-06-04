@@ -2,8 +2,8 @@
 /// <reference path="../node_modules/mocha-typescript/globals.d.ts" />
 
 import { expect } from "chai";
-import { SafeCodeGenerator, CodeFeedback } from "../main/safe/safe";
-import { solve, Threshold, FeedbackSupplier } from "../main/solver/solver";
+import { SafeCodeGenerator, CodeFeedback } from "../main/safe";
+import { solve, Threshold, FeedbackSupplier } from "../main/solver";
 
 @suite
 class SafeSolveTest {
@@ -12,7 +12,7 @@ class SafeSolveTest {
         return candidate => candidate === theCode;
     }
 
-    helpfulLockFeedback(theCode: string): FeedbackSupplier<string, CodeFeedback> {
+    helpfulFeedbackLock(theCode: string): FeedbackSupplier<string, CodeFeedback> {
         const chars = theCode.split('');
         return candidate => ({
             indexMatches:
@@ -20,7 +20,7 @@ class SafeSolveTest {
         });
     }
 
-    ignoreLockFeedback: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
+    noFeedbackLock: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
 
 
 
@@ -29,7 +29,7 @@ class SafeSolveTest {
         const theCode = '521'
         const result = solve(
             new SafeCodeGenerator(theCode.length),
-            this.ignoreLockFeedback,
+            this.noFeedbackLock,
             this.matchingCode(theCode));
 
         expect(result.solution).to.eq(theCode);
@@ -39,7 +39,7 @@ class SafeSolveTest {
         const theCode = '086'
         const result = solve(
             new SafeCodeGenerator(theCode.length),
-            this.helpfulLockFeedback(theCode),
+            this.helpfulFeedbackLock(theCode),
             this.matchingCode(theCode));
 
         expect(result.solution).to.eq(theCode);
@@ -51,11 +51,11 @@ class SafeSolveTest {
 
         const resultWithFeedback = solve(
             new SafeCodeGenerator(theCode.length),
-            this.helpfulLockFeedback(theCode),
+            this.helpfulFeedbackLock(theCode),
             threshold);
         const resultWithoutFeedback = solve(
             new SafeCodeGenerator(theCode.length),
-            this.ignoreLockFeedback,
+            this.noFeedbackLock,
             threshold);
 
         expect(resultWithFeedback.solutionsConsidered).to.be.lessThan(resultWithoutFeedback.solutionsConsidered);
