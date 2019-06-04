@@ -20,6 +20,8 @@ const matchingCode = function (theCode: string): Threshold<string, any> {
 
 describe("Solving for different inputs", () => {
     [
+        '0',
+        '000',
         '5352',
         '432',
         '43',

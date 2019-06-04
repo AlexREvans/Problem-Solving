@@ -26,7 +26,7 @@ class SafeSolveTest {
 
 
     @test canSolveWithEmptyFeedback() {
-        const theCode = '521'
+        const theCode = '521487'
         const result = solve(
             new SafeCodeGenerator(theCode.length),
             this.noFeedbackLock,
@@ -36,7 +36,7 @@ class SafeSolveTest {
     }
 
     @test canSolveWithFeedback() {
-        const theCode = '086'
+        const theCode = '521487'
         const result = solve(
             new SafeCodeGenerator(theCode.length),
             this.helpfulFeedbackLock(theCode),

@@ -7,7 +7,7 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
     knownPositions: string[];
     combinationLength: number;
     
-    seed: number = 0;
+    seed: number = -1;
     increment: number = 1;
 
     constructor(combinationLength: number) {
@@ -25,7 +25,7 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
         return knownDigits !== this.combinationLength || (this.seed + '').length <= this.combinationLength;
     }
 
-    receiveFeedback(candidate: string, feedback: { indexMatches: boolean[] }): void {
+    receiveFeedback(candidate: string, feedback: CodeFeedback): void {
         const correctIndicies = feedback.indexMatches
             .map((value, index) => ({ value, index }))
             .filter(vi => vi.value)
