@@ -3,7 +3,7 @@
 
 import { expect } from "chai";
 import { SafeCodeGenerator, CodeFeedback } from "../main/safe";
-import { solve, Threshold, FeedbackSupplier } from "../main/solver";
+import { findAnswer, Threshold, FeedbackSupplier } from "../main/solver";
 
 @suite
 class SafeSolveTest {
@@ -11,7 +11,7 @@ class SafeSolveTest {
     matchingCode(theCode: string): Threshold<string, any> {
         return candidate => candidate === theCode;
     }
-
+    
     helpfulFeedbackLock(theCode: string): FeedbackSupplier<string, CodeFeedback> {
         const chars = theCode.split('');
         return candidate => ({
@@ -27,37 +27,37 @@ class SafeSolveTest {
 
     @test canSolveWithEmptyFeedback() {
         const theCode = '521487'
-        const result = solve(
+        const result = findAnswer(
             new SafeCodeGenerator(theCode.length),
             this.noFeedbackLock,
             this.matchingCode(theCode));
 
-        expect(result.solution).to.eq(theCode);
+        expect(result.answer).to.eq(theCode);
     }
 
     @test canSolveWithFeedback() {
         const theCode = '521487'
-        const result = solve(
+        const result = findAnswer(
             new SafeCodeGenerator(theCode.length),
             this.helpfulFeedbackLock(theCode),
             this.matchingCode(theCode));
 
-        expect(result.solution).to.eq(theCode);
+        expect(result.answer).to.eq(theCode);
     }
 
     @test performanceImprovementWithFeedback() {
         const theCode = '521'
         const threshold = this.matchingCode(theCode);
 
-        const resultWithFeedback = solve(
+        const resultWithFeedback = findAnswer(
             new SafeCodeGenerator(theCode.length),
             this.helpfulFeedbackLock(theCode),
             threshold);
-        const resultWithoutFeedback = solve(
+        const resultWithoutFeedback = findAnswer(
             new SafeCodeGenerator(theCode.length),
             this.noFeedbackLock,
             threshold);
 
-        expect(resultWithFeedback.solutionsConsidered).to.be.lessThan(resultWithoutFeedback.solutionsConsidered);
+        expect(resultWithFeedback.answersConsidered).to.be.lessThan(resultWithoutFeedback.answersConsidered);
     }
 }

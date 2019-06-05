@@ -3,7 +3,7 @@
 
 import { expect } from "chai";
 import { SafeCodeGenerator, CodeFeedback } from "../main/safe";
-import { solve, FeedbackSupplier, Threshold } from "../main/solver";
+import { findAnswer, FeedbackSupplier, Threshold } from "../main/solver";
 
 
 const usefulFeedback = function (theCode: string): FeedbackSupplier<string, CodeFeedback> {
@@ -31,12 +31,12 @@ describe("Solving for different inputs", () => {
         '110032'
     ].forEach(theCode => {
         it("can solve for " + theCode, () => {
-            const result = solve(
+            const result = findAnswer(
                 new SafeCodeGenerator(theCode.length),
                 usefulFeedback(theCode),
                 matchingCode(theCode));
 
-            expect(result.solution).to.eq(theCode);
+            expect(result.answer).to.eq(theCode);
         })
     })
 });

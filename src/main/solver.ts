@@ -1,27 +1,28 @@
-export interface Generator<SOLUTION, FEEDBACK> {
-    nextCandidate(): SOLUTION;
+export interface Generator<ANSWER, FEEDBACK> {
+    nextCandidate(): ANSWER;
     hasNextCandidate(): boolean;
-    receiveFeedback(candidate: SOLUTION, feedback: FEEDBACK): void;
+    receiveFeedback(candidate: ANSWER, feedback: FEEDBACK): void;
 }
-export type FeedbackSupplier<SOLUTION, FEEDBACK> = (candidate: SOLUTION) => FEEDBACK
-export type Threshold<SOLUTION, FEEDBACK> = (candidate: SOLUTION, feedback: FEEDBACK) => boolean;
-export type SolutionWithStats<SOLUTION> = { solution: SOLUTION, solutionsConsidered: number }
+export type FeedbackSupplier<ANSWER, FEEDBACK> = (candidate: ANSWER) => FEEDBACK
+export type Threshold<ANSWER, FEEDBACK> = (answer: ANSWER, feedback: FEEDBACK) => boolean;
+export type AnswerWithStats<ANSWER> = { answer: ANSWER, answersConsidered: number }
 
-export function solve<SOLUTION, FEEDBACK>(
-    gen: Generator<SOLUTION, FEEDBACK>,
-    feedbackSupplier: FeedbackSupplier<SOLUTION, FEEDBACK>,
-    threshold: Threshold<SOLUTION, FEEDBACK>): SolutionWithStats<SOLUTION> {
 
-    var solutionsConsidered = 0;
+export function findAnswer<ANSWER, FEEDBACK>(
+    gen: Generator<ANSWER, FEEDBACK>,
+    feedbackSupplier: FeedbackSupplier<ANSWER, FEEDBACK>,
+    threshold: Threshold<ANSWER, FEEDBACK>): AnswerWithStats<ANSWER> {
+
+    var answersConsidered = 0;
 
     while (gen.hasNextCandidate()) {
-        const solution = gen.nextCandidate();
-        solutionsConsidered += 1;
-        const feedback = feedbackSupplier(solution);
-        if (threshold(solution, feedback)) {
-            return { solution, solutionsConsidered }
+        const answer: ANSWER = gen.nextCandidate();                                 /* STEP 1 - ABILITY TO GENERATE ANSWERS */
+        answersConsidered += 1;
+        const feedback: FEEDBACK = feedbackSupplier(answer);                        /* STEP 2 - ABILITY TO ASSESS ANSWERS */
+        if (threshold(answer, feedback)) {
+            return { answer: answer, answersConsidered: answersConsidered }
         }
-        gen.receiveFeedback(solution, feedback);
+        gen.receiveFeedback(answer, feedback);                                      /* STEP 3 - ABILITY TO PROCESS FEEDBACK */
     }
-    return { solution: null, solutionsConsidered };
+    return { answer: null, answersConsidered: answersConsidered };
 }

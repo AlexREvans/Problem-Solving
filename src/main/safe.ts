@@ -6,7 +6,7 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
 
     knownPositions: string[];
     combinationLength: number;
-    
+
     seed: number = -1;
     increment: number = 1;
 
@@ -22,7 +22,9 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
 
     hasNextCandidate(): boolean {
         const knownDigits = this.knownPositions.filter(v => v !== null).length;
-        return knownDigits !== this.combinationLength || (this.seed + '').length <= this.combinationLength;
+        const allDigitsKnown = knownDigits !== this.combinationLength;
+        const noSolutionFound = (this.seed + '').length <= this.combinationLength;
+        return allDigitsKnown || noSolutionFound;
     }
 
     receiveFeedback(candidate: string, feedback: CodeFeedback): void {
