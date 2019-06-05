@@ -11,26 +11,32 @@ A pattern for problem solving describes an approach to breakdown and tackle comp
 
 Whilst this repository demonstrates a technical application, the general structure described can be applied to a variety of problems.
 
+## Using this project
+
+   * Requires `docker` & `docker-compose`
+   * The tests can be run by running `./run.sh npm install` followed by `./run.sh npm run test`
+   * The presentation can be viewed by running `./run.sh npm install` followed by `./present.sh` (uses python to host presentation)
+
 ## Three steps to problem solving
 
-   1. Ability to generate solutions
+   1. Ability to generate answers
 
-The first step is to understand the solution space and where solutions can be drawn from. 
+The first step is to understand the solution space and where answers can be drawn from. 
 
-Laziness is king here. The solution space may can be very large and it's not always practical to enumerate all posible solutions. Understanding how to draw from the solution space (and draw order) will likely have significant impact on the number of considerations made before a solution is found. 
+Laziness is king here. The solution space may can be very large and it's not always practical to enumerate all posible answers. Understanding how to draw from the solution space (and draw order) will likely have significant impact on the number of considerations made before a solution is found. 
 
 An example would be rolling 2 dice - the solution space may be the sum of both dice [2..12], but 7 is the most likely sum. It'd make sense to consider 7 before 12.
 
-   2. Understanding to assess solutions
+   2. Ability to assess answers
 
-Once we've understood the solution space, we need to understand how to evaluate each solution from 2 perspectives 
+Once we've understood the solution space, we need to understand how to evaluate each answer from 2 perspectives 
 
    * Does it meet our threshold/criteria?
    * Can it provide feedback to narrow our solution space?
 
    3. Ability to process feedback
 
-Once a solution has been assessed, can we use the information to narrow our solution space and update our generation process to more quickly find a suitable solution?
+Once an answer has been assessed, can we use the information to narrow our solution space and update our generation process to more quickly find a suitable answer?
 
 To continue the 2 dice example, if one of the two values were to be revealed, then our solution space would be reduced to $knownvalue+[1..6].
 
@@ -41,7 +47,7 @@ To continue the 2 dice example, if one of the two values were to be revealed, th
 This file describes the implementation of the pattern and is split into 2 sections:
 
    * Types and definitions that express the concepts above
-   * A function which works through definitions to find a solution
+   * A function which works through definitions to find an answer
 
 ## [Combination-Lock Cracker](./src/main/safe.ts)
 
@@ -56,18 +62,17 @@ Where possible, if the lock provides feedback on correct digits, the cracker can
 Here, we have
 
    * An understanding of the solution space and a way of generating digit combinations through [the `SafeCodeGenerator` class](./src/main/safe.ts)
-   * A way of assessing solutions matches the correct code through the `matchingCode` `Threshold` function
+   * A way of assessing answers matches the correct code through the `matchingCode` `Threshold` function
    * Ways of providing feedback 
       * A lock which gives no feedback - `noFeedbackLock` 
       * A lock which tells of correct digits - `helpfulFeedbackLock`
 
-The subsequent tests illustrate that solutions can be generated and tested against the threshold function. 
+The subsequent tests illustrate that answers can be generated and tested against the threshold function. 
 
-A solution can be found whether or not the lock provides feedback but, with consideration for how we can narrow the solutions space where information is available, we can reduce the number of considerations by narrowing our solution space.
+An answer can be found whether or not the lock provides feedback but, with consideration for how we can narrow the solutions space where information is available, we can reduce the number of considerations by narrowing our solution space.
 
 
 ## In the Wild?
 
    * Recurrent Neural Networks
    * Agile improvement - scrum sprints/goals/retrospectives
-
