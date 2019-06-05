@@ -17,5 +17,8 @@
     "mocha-typescript": "^1.1.17",
     "typescript": "^3.4.5",
     "source-map-support": "^0.5.12"
+  },
+  "dependencies": {
+    "reveal": "0.0.4"
   }
 }
