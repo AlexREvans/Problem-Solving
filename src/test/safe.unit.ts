@@ -13,9 +13,4 @@ class SafeUnitTest {
         expect(codeGenerator.nextCandidate()).not.null;
         expect(codeGenerator.nextCandidate()).not.null;
     }
-
-    @test canConstructCombination() {
-        const codeGenerator = new SafeCodeGenerator(3);
-        expect(codeGenerator.toCombination(53)).to.eq("053");
-    }
 }

@@ -17,7 +17,7 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
 
     nextCandidate(): string {
         this.seed += this.increment;
-        return this.toCombination(this.seed);
+        return ('' + this.seed).padStart(this.combinationLength, "0");
     }
 
     hasNextCandidate(): boolean {
@@ -34,10 +34,7 @@ export class SafeCodeGenerator implements Generator<string, CodeFeedback> {
             .map(vi => vi.index);
 
         correctIndicies.forEach(index => this.knownPositions[index] = candidate[index]);
-        this.increment = Math.pow(10, this.combinationLength - 1 - this.knownPositions.lastIndexOf(null));
-    }
-
-    toCombination(n: number) {
-        return ('' + n).padStart(this.combinationLength, "0");
+        this.increment = Math.pow(10,
+            this.combinationLength - 1 - this.knownPositions.lastIndexOf(null));
     }
 }

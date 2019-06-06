@@ -13,10 +13,7 @@ export type Threshold<ANSWER, FEEDBACK> =
 export type AnswerWithStats<ANSWER> =
     { answer: ANSWER, answersConsidered: number }
 
-
-
-
-
+    
 export function findAnswer<ANSWER, FEEDBACK>(
     gen: Generator<ANSWER, FEEDBACK>,
     feedbackSupplier: FeedbackSupplier<ANSWER, FEEDBACK>,

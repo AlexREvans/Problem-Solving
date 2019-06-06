@@ -12,8 +12,10 @@ class SafeSolveTest {
         return candidate => candidate === theCode;
     }
 
-    noFeedbackLock: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
-    
+    noFeedbackLock: FeedbackSupplier<string, CodeFeedback> = candidate => ({
+        indexMatches: []
+    })
+
     helpfulFeedbackLock(theCode: string): FeedbackSupplier<string, CodeFeedback> {
         const chars = theCode.split('');
         return candidate => ({
@@ -58,6 +60,7 @@ class SafeSolveTest {
             this.noFeedbackLock,
             threshold);
 
-        expect(resultWithFeedback.answersConsidered).to.be.lessThan(resultWithoutFeedback.answersConsidered);
+        expect(resultWithFeedback.answersConsidered)
+            .to.be.lessThan(resultWithoutFeedback.answersConsidered);
     }
 }
