@@ -11,6 +11,8 @@ class SafeSolveTest {
     matchingCode(theCode: string): Threshold<string, any> {
         return candidate => candidate === theCode;
     }
+
+    noFeedbackLock: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
     
     helpfulFeedbackLock(theCode: string): FeedbackSupplier<string, CodeFeedback> {
         const chars = theCode.split('');
@@ -19,8 +21,6 @@ class SafeSolveTest {
                 chars.map((digit, index) => candidate[index] === digit)
         });
     }
-
-    noFeedbackLock: FeedbackSupplier<string, CodeFeedback> = candidate => ({ indexMatches: [] })
 
 
 
