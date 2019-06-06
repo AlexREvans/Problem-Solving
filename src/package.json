@@ -6,7 +6,8 @@
   "private": true,
   "scripts": {
     "pretest": "tsc",
-    "test": "mocha"
+    "test": "mocha",
+    "testonly": "mocha"
   },
   "repository": "github:AlexREvans/Problem-Solving",
   "devDependencies": {
